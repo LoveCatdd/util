@@ -67,10 +67,11 @@ func autoModified(conf *ViperStruct, v *viper.Viper) {
 
 	v.OnConfigChange(func(e fsnotify.Event) {
 
-		log.Printf("%v changed", e.Name)
-
 		if err := v.Unmarshal(conf); err != nil {
 			log.Printf("unmarshal conf failed, err:%s \n", err)
+		} else {
+			log.Printf("%v changed", e.Name)
+
 		}
 
 	})
