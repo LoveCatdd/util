@@ -106,7 +106,7 @@ func buildOptions(conf *ZapConfig) (options []zap.Option) {
 	if conf.Zap.StackTrace {
 		options = append(options, zap.AddStacktrace(zapcore.WarnLevel))
 	}
-	options = append(options, zap.AddCallerSkip(2))
+	options = append(options, zap.AddCallerSkip(1))
 	return
 }
 
@@ -120,27 +120,27 @@ func logInGoroutine(level zapcore.Level, msg string, fields ...Field) {
 }
 
 func Debug(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.DebugLevel, msg, fields...)
+	logInGoroutine(zapcore.DebugLevel, msg, fields...)
 }
 
 func Info(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.InfoLevel, msg, fields...)
+	logInGoroutine(zapcore.InfoLevel, msg, fields...)
 }
 
 func Warn(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.WarnLevel, msg, fields...)
+	logInGoroutine(zapcore.WarnLevel, msg, fields...)
 }
 
 func Error(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.ErrorLevel, msg, fields...)
+	logInGoroutine(zapcore.ErrorLevel, msg, fields...)
 }
 
 func Panic(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.PanicLevel, msg, fields...)
+	logInGoroutine(zapcore.PanicLevel, msg, fields...)
 }
 
 func Fatal(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.FatalLevel, msg, fields...)
+	logInGoroutine(zapcore.FatalLevel, msg, fields...)
 }
 
 func Sync() error {
