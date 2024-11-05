@@ -1,7 +1,6 @@
 package log
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -112,35 +111,28 @@ func buildOptions(conf *ZapConfig) (options []zap.Option) {
 
 type Field = zap.Field
 
-func logInGoroutine(level zapcore.Level, msg string, fields ...Field) {
-	currentTime := time.Now().Format("2006-01-02 15:04:05.9999")
-
-	_msg := fmt.Sprintf("true_time[%s] body[%s]", currentTime, msg)
-	_logger.Log(level, _msg, fields...)
-}
-
 func Debug(msg string, fields ...Field) {
-	logInGoroutine(zapcore.DebugLevel, msg, fields...)
+	_logger.Log(zapcore.DebugLevel, msg, fields...)
 }
 
 func Info(msg string, fields ...Field) {
-	logInGoroutine(zapcore.InfoLevel, msg, fields...)
+	_logger.Log(zapcore.InfoLevel, msg, fields...)
 }
 
 func Warn(msg string, fields ...Field) {
-	logInGoroutine(zapcore.WarnLevel, msg, fields...)
+	_logger.Log(zapcore.WarnLevel, msg, fields...)
 }
 
 func Error(msg string, fields ...Field) {
-	logInGoroutine(zapcore.ErrorLevel, msg, fields...)
+	_logger.Log(zapcore.ErrorLevel, msg, fields...)
 }
 
 func Panic(msg string, fields ...Field) {
-	logInGoroutine(zapcore.PanicLevel, msg, fields...)
+	_logger.Log(zapcore.PanicLevel, msg, fields...)
 }
 
 func Fatal(msg string, fields ...Field) {
-	logInGoroutine(zapcore.FatalLevel, msg, fields...)
+	_logger.Log(zapcore.FatalLevel, msg, fields...)
 }
 
 func Sync() error {
