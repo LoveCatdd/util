@@ -106,6 +106,7 @@ func buildOptions(conf *ZapConfig, levelEnabler zapcore.LevelEnabler) (options [
 	if conf.Zap.StackTrace {
 		options = append(options, zap.AddStacktrace(levelEnabler))
 	}
+	options = append(options, zap.AddCallerSkip(1))
 	return
 }
 
@@ -113,9 +114,9 @@ type Field = zap.Field
 
 func logInGoroutine(level zapcore.Level, msg string, fields ...Field) {
 	currentTime := time.Now().Format("2006-01-02 15:04:05.9999")
-	msgWithTime := fmt.Sprintf("true_time[%s] body[%s]", currentTime, msg)
 
-	_logger.Log(level, msgWithTime, fields...)
+	_msg := fmt.Sprintf("true_time[%s] body[%s]", currentTime, msg)
+	_logger.Log(level, _msg, fields...)
 }
 
 func Debug(msg string, fields ...Field) {
