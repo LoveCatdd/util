@@ -106,6 +106,7 @@ func buildOptions(conf *ZapConfig) (options []zap.Option) {
 	if conf.Zap.StackTrace {
 		options = append(options, zap.AddStacktrace(zapcore.WarnLevel))
 	}
+	options = append(options, zap.AddCallerSkip(2))
 	return
 }
 
