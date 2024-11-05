@@ -112,28 +112,28 @@ func buildOptions(conf *ZapConfig) (options []zap.Option) {
 
 type Field = zap.Field
 
-func Debug(temp string, fields ...string) {
-	_logger.Log(zapcore.DebugLevel, fmt.Sprintf(temp, fields))
+func Debug(format string, a ...any) {
+	_logger.Log(zapcore.DebugLevel, fmt.Sprintf(format, a...))
 }
 
-func Info(temp string, fields ...string) {
-	_logger.Log(zapcore.InfoLevel, fmt.Sprintf(temp, fields))
+func Info(format string, a ...any) {
+	_logger.Log(zapcore.InfoLevel, fmt.Sprintf(format, a...))
 }
 
-func Warn(temp string, fields ...string) {
-	_logger.Log(zapcore.WarnLevel, fmt.Sprintf(temp, fields))
+func Warn(format string, a ...any) {
+	_logger.Log(zapcore.WarnLevel, fmt.Sprintf(format, a...))
 }
 
-func Error(temp string, fields ...string) {
-	_logger.Log(zapcore.ErrorLevel, fmt.Sprintf(temp, fields))
+func Error(format string, a ...any) {
+	_logger.Log(zapcore.ErrorLevel, fmt.Sprintf(format, a...))
 }
 
-func Panic(temp string, fields ...string) {
-	_logger.Log(zapcore.PanicLevel, fmt.Sprintf(temp, fields))
+func Panic(format string, a ...any) {
+	_logger.Log(zapcore.PanicLevel, fmt.Sprintf(format, a...))
 }
 
-func Fatal(temp string, fields ...string) {
-	_logger.Log(zapcore.FatalLevel, fmt.Sprintf(temp, fields))
+func Fatal(format string, a ...any) {
+	_logger.Log(zapcore.FatalLevel, fmt.Sprintf(format, a...))
 }
 
 func Sync() error {
