@@ -3,13 +3,17 @@ package config
 import (
 	"fmt"
 	"log"
+	"sync"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
 
 // 环境
-var _enviro string
+var (
+	_enviro string
+	once    sync.Once
+)
 
 func SetEnviro(enviro string) {
 	_enviro = enviro
@@ -63,16 +67,19 @@ func settingViper(conf *ViperStruct, type_ string) error {
 
 func autoModified(conf *ViperStruct, v *viper.Viper) {
 
-	v.WatchConfig()
+	once.Do(func() {
+		v.WatchConfig()
 
-	v.OnConfigChange(func(e fsnotify.Event) {
-
-		if err := v.Unmarshal(conf); err != nil {
-			log.Printf("unmarshal conf failed, err:%s \n", err)
-		} else {
+		v.OnConfigChange(func(e fsnotify.Event) {
 			log.Printf("%v changed", e.Name)
 
-		}
+			if err := v.Unmarshal(conf); err != nil {
+				log.Printf("unmarshal conf failed, err:%s \n", err)
+			} else {
+				log.Printf("%v changed", e.Name)
 
+			}
+
+		})
 	})
 }
