@@ -124,7 +124,7 @@ func Debug(msg string, fields ...Field) {
 }
 
 func Info(msg string, fields ...Field) {
-	go logInGoroutine(zapcore.InfoLevel, msg, fields...)
+	logInGoroutine(zapcore.InfoLevel, msg, fields...)
 }
 
 func Warn(msg string, fields ...Field) {
