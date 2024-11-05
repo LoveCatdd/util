@@ -14,7 +14,7 @@ type ZapConfig struct {
 		Writer     string         `mapstructure:"writer"` //日志输出到哪里 file | console | both
 		Encode     string         `mapstructure:"encode"`
 		LogFile    *LogFileConfig `mapstructure:"logFile"`
-		Enable     bool           `mapstructure:"logFile"` // 开关zap日志
+		Enable     bool           `mapstructure:"enable"` // 开关zap日志
 	} `mapstructure:"zap"`
 }
 
