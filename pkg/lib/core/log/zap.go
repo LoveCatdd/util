@@ -93,20 +93,19 @@ func InitZap(config *ZapConfig) {
 // 将所有合并
 func tee(conf *ZapConfig, encoder zapcore.Encoder, levelEnabler zapcore.LevelEnabler) (core zapcore.Core, options []zap.Option) {
 	sink := zapWriteSyncer(conf)
-	return zapcore.NewCore(encoder, sink, levelEnabler), buildOptions(conf, levelEnabler)
+	return zapcore.NewCore(encoder, sink, levelEnabler), buildOptions(conf)
 }
 
 // 构建Option
-func buildOptions(conf *ZapConfig, levelEnabler zapcore.LevelEnabler) (options []zap.Option) {
+func buildOptions(conf *ZapConfig) (options []zap.Option) {
 
 	if conf.Zap.Caller {
 		options = append(options, zap.AddCaller())
 	}
 
 	if conf.Zap.StackTrace {
-		options = append(options, zap.AddStacktrace(levelEnabler))
+		options = append(options, zap.AddStacktrace(zapcore.WarnLevel))
 	}
-	options = append(options, zap.AddCallerSkip(1))
 	return
 }
 
@@ -124,7 +123,7 @@ func Debug(msg string, fields ...Field) {
 }
 
 func Info(msg string, fields ...Field) {
-	logInGoroutine(zapcore.InfoLevel, msg, fields...)
+	go logInGoroutine(zapcore.InfoLevel, msg, fields...)
 }
 
 func Warn(msg string, fields ...Field) {
