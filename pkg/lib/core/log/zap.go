@@ -27,7 +27,8 @@ func zapEncoder(config *ZapConfig) zapcore.Encoder {
 	}
 	// 自定义时间格式
 	encoderConfig.EncodeTime = func(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
-		encoder.AppendString(config.Zap.Prefix + t.Format(config.Zap.TimeFormat))
+		encoder.AppendString(config.Zap.Prefix + t.Format(config.Zap.TimeFormat) +
+			"\ttraceId: " + traceId.String())
 	}
 
 	// 日志级别小写
@@ -113,6 +114,7 @@ func buildOptions(conf *ZapConfig) (options []zap.Option) {
 type Field = zap.Field
 
 func Debug(format string, a ...any) {
+
 	_logger.Log(zapcore.DebugLevel, fmt.Sprintf(format, a...))
 }
 

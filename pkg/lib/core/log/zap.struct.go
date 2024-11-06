@@ -1,6 +1,9 @@
 package log
 
-import "github.com/LoveCatdd/util/pkg/lib/core/config"
+import (
+	"github.com/LoveCatdd/util/pkg/lib/core/config"
+	uuid "github.com/satori/go.uuid"
+)
 
 // ZapConfig
 // @Description: zap日志配置结构体
@@ -30,4 +33,13 @@ type LogFileConfig struct {
 
 func (*ZapConfig) FileType() string {
 	return config.VIPER_YAML
+}
+
+var (
+	// log info
+	traceId uuid.UUID
+)
+
+func SetTraceId(uuid uuid.UUID) {
+	traceId = uuid
 }
