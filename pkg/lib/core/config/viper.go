@@ -2,9 +2,9 @@ package config
 
 import (
 	"fmt"
-	"log"
 	"sync"
 
+	"github.com/LoveCatdd/util/pkg/lib/core/log"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -35,7 +35,7 @@ func DOTENV(conf ViperStruct) error {
 	return settingViper(&conf, VIPER_DOTENV)
 }
 
-func settingViper(conf *ViperStruct, type_ string) error {
+func settingViper(conf *ViperStruct, _type string) error {
 
 	var name string
 
@@ -47,17 +47,17 @@ func settingViper(conf *ViperStruct, type_ string) error {
 
 	v := viper.New()
 	v.SetConfigName(name)
-	v.SetConfigType(type_)
+	v.SetConfigType(_type)
 	v.AddConfigPath("../resource")
 
 	err := v.ReadInConfig()
 	if err != nil {
-		log.Printf("Fatal error %v file: %s \n", v.ConfigFileUsed(), err)
+		log.Fatal("Fatal error %v file: %s \n", v.ConfigFileUsed(), err)
 		return err
 	}
 
 	if err := v.Unmarshal(conf); err != nil {
-		log.Printf("unmarshal conf failed, err:%s \n", err)
+		log.Error("unmarshal conf failed, err:%s \n", err)
 		return err
 	}
 
@@ -71,15 +71,10 @@ func autoModified(conf *ViperStruct, v *viper.Viper) {
 		v.WatchConfig()
 
 		v.OnConfigChange(func(e fsnotify.Event) {
-			log.Printf("%v changed", e.Name)
 
 			if err := v.Unmarshal(conf); err != nil {
-				log.Printf("unmarshal conf failed, err:%s \n", err)
-			} else {
-				log.Printf("%v changed", e.Name)
-
+				log.Error("unmarshal conf failed, err:%s \n", err)
 			}
-
 		})
 	})
 }

@@ -1,7 +1,6 @@
 package log
 
 import (
-	"github.com/LoveCatdd/util/pkg/lib/core/config"
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -32,7 +31,7 @@ type LogFileConfig struct {
 }
 
 func (*ZapConfig) FileType() string {
-	return config.VIPER_YAML
+	return "yaml"
 }
 
 var (

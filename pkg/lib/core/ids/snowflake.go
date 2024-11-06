@@ -1,10 +1,11 @@
 package ids
 
 import (
-	"log"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/LoveCatdd/util/pkg/lib/core/log"
 )
 
 type snowFlake struct {
@@ -39,7 +40,7 @@ func (s *snowFlake) nextId() int64 {
 	t := now - epoch
 	if t > timestampMax {
 		s.Unlock()
-		log.Printf("epoch must be between 0 and %d", timestampMax-1)
+		log.Error("epoch must be between 0 and %d", timestampMax-1)
 		return 0
 	}
 	s.timestamp = now
