@@ -40,7 +40,7 @@ func (s *snowFlake) nextId() int64 {
 	t := now - epoch
 	if t > timestampMax {
 		s.Unlock()
-		log.Error("epoch must be between 0 and %d", timestampMax-1)
+		log.Errorf("epoch must be between 0 and %d", timestampMax-1)
 		return 0
 	}
 	s.timestamp = now
