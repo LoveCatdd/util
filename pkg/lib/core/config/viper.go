@@ -52,12 +52,12 @@ func settingViper(conf *ViperStruct, _type string) error {
 
 	err := v.ReadInConfig()
 	if err != nil {
-		log.Fatal("Fatal error %v file: %s \n", v.ConfigFileUsed(), err)
+		log.Fatalf("Fatal error %v file: %s \n", v.ConfigFileUsed(), err)
 		return err
 	}
 
 	if err := v.Unmarshal(conf); err != nil {
-		log.Error("unmarshal conf failed, err:%s \n", err)
+		log.Errorf("unmarshal conf failed, err:%s \n", err)
 		return err
 	}
 
@@ -73,7 +73,7 @@ func autoModified(conf *ViperStruct, v *viper.Viper) {
 		v.OnConfigChange(func(e fsnotify.Event) {
 
 			if err := v.Unmarshal(conf); err != nil {
-				log.Error("unmarshal conf failed, err:%s \n", err)
+				log.Errorf("unmarshal conf failed, err:%s \n", err)
 			}
 		})
 	})
