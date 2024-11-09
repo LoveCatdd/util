@@ -12,7 +12,7 @@ import (
 
 var (
 	_logger *zap.Logger
-	Config  *ZapConfig
+	Config  = new(ZapConfig)
 )
 
 func zapEncoder() zapcore.Encoder {

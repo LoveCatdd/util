@@ -1,4 +1,4 @@
-package config
+package viper
 
 // 加载类型
 const (
