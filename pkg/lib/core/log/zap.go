@@ -2,6 +2,7 @@ package log
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
@@ -92,6 +93,12 @@ func InitZap() {
 
 	// 注入logger
 	_logger = zap.New(subCore, options...)
+
+	if _logger == nil {
+		log.Panic("zap logger start panic nil")
+	} else {
+		log.Println("zap logger start success")
+	}
 }
 
 // 将所有合并
