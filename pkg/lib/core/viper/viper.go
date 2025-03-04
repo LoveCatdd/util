@@ -2,9 +2,9 @@ package viper
 
 import (
 	"fmt"
+	"log"
 	"sync"
 
-	"github.com/LoveCatdd/util/pkg/lib/core/log"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 )
@@ -52,12 +52,12 @@ func settingViper(conf *ViperStruct, _type string) error {
 
 	err := v.ReadInConfig()
 	if err != nil {
-		log.Fatalf("Fatal error %v file: %s \n", v.ConfigFileUsed(), err)
+		log.Panicf("Fatal error %v file: %s \n", v.ConfigFileUsed(), err)
 		return err
 	}
 
 	if err := v.Unmarshal(conf); err != nil {
-		log.Errorf("unmarshal conf failed, err:%s \n", err)
+		log.Panicf("unmarshal conf failed, err:%s \n", err)
 		return err
 	}
 
@@ -73,7 +73,7 @@ func autoModified(conf *ViperStruct, v *viper.Viper) {
 		v.OnConfigChange(func(e fsnotify.Event) {
 
 			if err := v.Unmarshal(conf); err != nil {
-				log.Errorf("unmarshal conf failed, err:%s \n", err)
+				log.Printf("unmarshal conf failed, err:%s \n", err)
 			}
 		})
 	})
